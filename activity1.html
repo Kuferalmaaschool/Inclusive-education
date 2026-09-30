@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكعب المشاركة التفاعلي | ميزات الوصول الشامل المحدثة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-slate: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #334155;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --border: #94a3b8;
+            --focus-ring: #ea580c;
+        }
+
+        /* High Contrast Override - Overrides root styles when active */
+        html.high-contrast {
+            --bg-slate: #000000 !important;
+            --card-bg: #121212 !important;
+            --text-main: #ffffff !important;
+            --text-muted: #ffff00 !important;
+            --primary: #ffff00 !important;
+            --primary-dark: #facc15 !important;
+            --border: #ffffff !important;
+            --focus-ring: #00ffff !important;
+        }
+
+        html.high-contrast * {
+            border-color: #ffffff !important;
+        }
+
+        html.high-contrast .header {
+            background: #000000 !important;
+            color: #ffffff !important;
+            border: 3px solid #ffffff !important;
+        }
+
+        html.high-contrast .roll-btn, 
+        html.high-contrast .a11y-btn {
+            background: #ffff00 !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
+            border: 2px solid #ffffff !important;
+        }
+
+        /* Reduce Motion Override */
+        html.reduce-motion *,
+        html.reduce-motion *::before,
+        html.reduce-motion *::after {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        html {
+            font-size: 100%; /* Base 16px */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-slate);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Focus Style for Keyboard Navigation */
+        *:focus-visible {
+            outline: 4px solid var(--focus-ring) !important;
+            outline-offset: 4px !important;
+        }
+
+        /* Accessibility Toolbar */
+        .a11y-toolbar {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .a11y-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .a11y-btn {
+            background: var(--bg-slate);
+            color: var(--text-main);
+            border: 2px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .a11y-btn[aria-pressed="true"] {
+            background-color: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary-dark);
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            padding: 28px 20px;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-top: 8px;
+        }
+
+        .interactive-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid var(--border);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .cube-display {
+            width: 170px;
+            height: 170px;
+            margin: 20px auto;
+            background: var(--bg-slate);
+            border: 3px dashed var(--primary);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .cube-display.rolling {
+            transform: rotate(360deg) scale(0.85);
+        }
+
+        .cube-icon {
+            font-size: 3.5rem;
+            margin-bottom: 6px;
+        }
+
+        .cube-label {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .roll-btn {
+            background-color: var(--primary);
+            color: white;
+            border: 2px solid transparent;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 18px;
+            background-color: var(--bg-slate);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1.05rem;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 2px solid var(--border);
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .badge {
+            background: var(--bg-slate);
+            color: var(--text-main);
+            border: 1.5px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Accessible Control Toolbar -->
+<nav class="a11y-toolbar" aria-label="أدوات الوصول الشامل">
+    <strong style="font-size:0.95rem;">♿ شريط الوصول الشامل:</strong>
+    <div class="a11y-btn-group">
+        <button class="a11y-btn" id="contrastBtn" onclick="toggleContrast()" aria-pressed="false">
+            👁️ تباين عالٍ
+        </button>
+        <button class="a11y-btn" onclick="adjustFontSize(10)">
+            A+ تكبير الخط
+        </button>
+        <button class="a11y-btn" onclick="adjustFontSize(-10)">
+            A- تصغير الخط
+        </button>
+        <button class="a11y-btn" id="motionBtn" onclick="toggleMotion()" aria-pressed="false">
+            🚫 إيقاف الحركة
+        </button>
+        <button class="a11y-btn" onclick="readAloud()">
+            🔊 قراءة النتيجة
+        </button>
+    </div>
+</nav>
+
+<main class="container">
+    <header class="header">
+        <span>مختبر الوسائل الدامجة • الوسيلة #05</span>
+        <h1>مكعب المشاركة التفاعلي</h1>
+        <p>تصميم متاح للجميع يضمن تكافؤ فرص المشاركة الصفية.</p>
+    </header>
+
+    <section class="interactive-card" aria-label="منطقة تدوير المكعب التفاعلي">
+        <h2>اضغط على المكعب أو زر Enter/Space للتدوير</h2>
+        
+        <div class="cube-display" 
+             id="cubeDisplay" 
+             tabindex="0" 
+             role="button" 
+             aria-label="مكعب المشاركة. اضغط لتدوير المكعب واختيار مسار المشاركة"
+             onclick="rollCube()" 
+             onkeydown="handleKeyPress(event)">
+            <span class="cube-icon" id="cubeIcon" aria-hidden="true">🎲</span>
+            <span class="cube-label" id="cubeLabel">إرمِ المكعب</span>
+        </div>
+
+        <button class="roll-btn" id="rollBtn" onclick="rollCube()">
+            🎲 تدوير المكعب الآن
+        </button>
+
+        <div class="result-box" 
+             id="resultDescription" 
+             role="status" 
+             aria-live="polite">
+            اضغط على المكعب لتدويره واختيار طريقة مساوية في القيمة لإتاحة التعبير لجميع الطلبة.
+        </div>
+    </section>
+
+    <div class="info-grid">
+        <article class="info-card">
+            <h3>📌 المشكلة والأثر السريع</h3>
+            <p><strong>المشكلة:</strong> اعتماد المشاركة على الكلام السريع يحرم بعض الطلبة من التعبير.</p>
+            <br>
+            <p><strong>مؤشر الأثر:</strong> ارتفاع نسبة المشاركة المستقلة بدون خفض التوقعات.</p>
+        </article>
+
+        <article class="info-card">
+            <h3>🌐 الوصول الشامل (Universal Access)</h3>
+            <div class="badges-container">
+                <span class="badge">♿ حركي: دعم الكيبورد كاملاً</span>
+                <span class="badge">👁️ بصري: تباين عالٍ وقارئ شاشة</span>
+                <span class="badge">🔊 سمعي: نطق صوتي تفاعلي</span>
+                <span class="badge">🧠 معرفي: خيار إيقاف الحركة</span>
+            </div>
+        </article>
+    </div>
+</main>
+
+<script>
+    const cubeFaces = [
+        { label: "تَحدّث 💬", icon: "💬", desc: "الإجابة شفهياً بالكلام المباشر أو تسجيل صوتي." },
+        { label: "أَشِر 👈", icon: "👈", desc: "الإشارة إلى الصورة، الرمز، أو الخيار الصحيح." },
+        { label: "ارْسُم 🎨", icon: "🎨", desc: "التعبير عن الفكرة برسمة بسيطة أو مخطط مرئي." },
+        { label: "اخْتَر 📋", icon: "📋", desc: "اختيار الإجابة الصحيحة من بطاقات خيارات جاهزة." },
+        { label: "مَثّل 🎭", icon: "🎭", desc: "استخدام لغة الجسد، تعابير الوجه، أو تمثيل الموقف." },
+        { label: "تَعاوَن 🤝", icon: "🤝", desc: "الاستعانة بشريك أو تقديم إجابة مشتركة كفريق." }
+    ];
+
+    let fontScalePercent = 100;
+    let isReducedMotion = false;
+    let currentTextToRead = "";
+
+    // 1. Font Size Adjustment (Fix for rem units)
+    function adjustFontSize(delta) {
+        fontScalePercent = Math.min(Math.max(80, fontScalePercent + delta), 150);
+        document.documentElement.style.fontSize = fontScalePercent + '%';
+    }
+
+    // 2. High Contrast Toggle (Fix for styling overrides)
+    function toggleContrast() {
+        const isHC = document.documentElement.classList.toggle('high-contrast');
+        const btn = document.getElementById('contrastBtn');
+        btn.setAttribute('aria-pressed', isHC);
+    }
+
+    // 3. Motion Reduction Toggle
+    function toggleMotion() {
+        isReducedMotion = document.documentElement.classList.toggle('reduce-motion');
+        const btn = document.getElementById('motionBtn');
+        btn.setAttribute('aria-pressed', isReducedMotion);
+        btn.innerText = isReducedMotion ? "✅ الحركة معطلة" : "🚫 إيقاف الحركة";
+    }
+
+    // 4. Cube Roll Logic
+    function rollCube() {
+        const cubeDisplay = document.getElementById('cubeDisplay');
+        const cubeIcon = document.getElementById('cubeIcon');
+        const cubeLabel = document.getElementById('cubeLabel');
+        const resultDescription = document.getElementById('resultDescription');
+
+        if (!isReducedMotion) {
+            cubeDisplay.classList.add('rolling');
+        }
+
+        cubeLabel.innerText = "جاري الدوران...";
+        cubeIcon.innerText = "🌀";
+
+        setTimeout(() => {
+            const randomIndex = Math.floor(Math.random() * cubeFaces.length);
+            const selected = cubeFaces[randomIndex];
+
+            cubeIcon.innerText = selected.icon;
+            cubeLabel.innerText = selected.label;
+            
+            currentTextToRead = `طريقة المشاركة المختارة هي: ${selected.label}. ${selected.desc}`;
+            resultDescription.innerHTML = `<strong>طريقة المشاركة المختارة:</strong> ${selected.desc}`;
+
+            cubeDisplay.classList.remove('rolling');
+        }, isReducedMotion ? 50 : 400);
+    }
+
+    // 5. Keyboard Navigation Handling
+    function handleKeyPress(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            rollCube();
+        }
+    }
+
+    // 6. Text-to-Speech Read Aloud (Fix for browser voice loading)
+    function readAloud() {
+        const text = currentTextToRead || document.getElementById('resultDescription').innerText;
+        
+        // Visual indicator when read aloud is triggered
+        const resBox = document.getElementById('resultDescription');
+        resBox.style.boxShadow = "0 0 0 4px #ea580c";
+        setTimeout(() => resBox.style.boxShadow = "", 2000);
+
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            utterance.rate = 0.9;
+            
+            // Try to pick an Arabic voice if available
+            const voices = window.speechSynthesis.getVoices();
+            const arVoice = voices.find(v => v.lang.startsWith('ar'));
+            if (arVoice) utterance.voice = arVoice;
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("النطق الصوتي غير مدعوم في متصفحك.");
+        }
+    }
+
+    // Pre-load voices for SpeechSynthesis
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+</script>
+
+</body>
+</html>

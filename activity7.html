@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07 - كتاب القصة الملموسة</title>
+    <!-- استدعاء خط تجوال العربي من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --teal-header: #007970;
+            --purple-header: #51367d;
+            --purple-accent: #6a3080;
+            --bg-light: #f7f6fb;
+            --card-border-purple: #5c3580;
+            --yellow-accent: #dda036;
+            --pink-accent: #be537d;
+            --box-problem-bg: #fffbf0;
+            --box-craft-bg: #f2f8f7;
+            --box-adapt-bg: #fdf2f5;
+            --text-main: #2b2b2b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: #eef1f5;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 10px;
+            position: relative;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .header-banner {
+            display: flex;
+            width: 100%;
+            height: 70px;
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .header-left-title {
+            background-color: var(--purple-header);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding-right: 25px;
+        }
+
+        .header-right-num {
+            background-color: var(--teal-header);
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            font-weight: 900;
+        }
+
+        .content-container {
+            padding: 25px;
+            background-color: #ffffff;
+        }
+
+        .graphic-card {
+            border: 3px solid var(--card-border-purple);
+            border-radius: 20px;
+            background-color: var(--bg-light);
+            padding: 20px;
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .graphic-card .badge-num {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: var(--purple-header);
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .diagram-svg-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 10px auto 0 auto;
+            display: block;
+        }
+
+        /* تنسيق المثال التفاعلي */
+        .interactive-section {
+            background-color: #ffffff;
+            border: 2px dashed #b1a7cd;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .interactive-title {
+            color: var(--purple-header);
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .story-book-box {
+            background-color: #f2f8f7;
+            border: 2px solid var(--teal-header);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .story-page-content {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            min-height: 50px;
+        }
+
+        .story-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .story-btn {
+            background-color: var(--teal-header);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .story-btn:hover {
+            background-color: #005a52;
+        }
+
+        .block-problem {
+            background-color: var(--box-problem-bg);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .block-problem-title {
+            color: var(--yellow-accent);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .block-problem-desc {
+            color: var(--text-main);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .split-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .block-materials {
+            background-color: var(--box-craft-bg);
+            flex: 1;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .block-materials-title {
+            color: var(--teal-header);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .block-materials-list {
+            list-style: none;
+        }
+
+        .block-materials-list li {
+            position: relative;
+            padding-right: 15px;
+            margin-bottom: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .block-materials-list li::before {
+            content: "•";
+            position: absolute;
+            right: 0;
+            color: var(--teal-header);
+            font-weight: bold;
+        }
+
+        .block-steps {
+            background-color: var(--box-craft-bg);
+            flex: 1.5;
+            padding: 18px;
+            border-radius: 8px;
+        }
+
+        .block-steps-title {
+            color: var(--purple-header);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .block-steps-list {
+            list-style: none;
+        }
+
+        .block-steps-list li {
+            margin-bottom: 6px;
+            font-size: 0.98rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .block-adapt {
+            background-color: var(--box-adapt-bg);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .block-adapt-title {
+            color: var(--pink-accent);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .block-adapt-desc {
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .access-marks-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .access-title {
+            color: var(--teal-header);
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        .access-items {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .access-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--teal-header);
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .impact-row {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #444;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+
+        .impact-title {
+            color: var(--teal-header);
+            font-weight: 800;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .tool-btn {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.2s;
+        }
+
+        .tool-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .floating-home-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--purple-header), var(--teal-header));
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(81, 54, 125, 0.4);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-home-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 121, 112, 0.5);
+        }
+
+        body.high-contrast {
+            background-color: #000000 !important;
+            color: #ffff00 !important;
+        }
+
+        body.high-contrast .page-wrapper,
+        body.high-contrast .graphic-card,
+        body.high-contrast .block-problem,
+        body.high-contrast .block-materials,
+        body.high-contrast .block-steps,
+        body.high-contrast .block-adapt,
+        body.high-contrast .interactive-section,
+        body.high-contrast .story-book-box {
+            background-color: #111111 !important;
+            color: #ffffff !important;
+            border-color: #ffff00 !important;
+        }
+
+        @media (max-width: 768px) {
+            .header-banner { font-size: 1.3rem; height: 60px; }
+            .header-right-num { width: 100px; font-size: 1.6rem; }
+            .split-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="floating-home-btn" title="العودة إلى الصفحة الرئيسية">
+        <i class="fa-solid fa-house"></i>
+        <span>الرئيسية</span>
+    </a>
+
+    <div class="page-wrapper">
+        <header class="header-banner">
+            <div class="header-left-title">كتاب القصة الملموسة</div>
+            <div class="header-right-num">07</div>
+        </header>
+
+        <div class="content-container">
+            
+            <div class="graphic-card">
+                <span class="badge-num">07</span>
+                <svg class="diagram-svg-container" viewBox="0 0 650 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="5" y="5" width="640" height="290" rx="20" stroke="#5C3580" stroke-width="4" fill="#F8F6FD"/>
+                    
+                    <circle cx="230" cy="95" r="28" fill="#DDA036"/>
+                    <rect x="202" y="130" width="56" height="110" rx="20" fill="#196E62"/>
+                    
+                    <!-- رسم كتاب مفتوح -->
+                    <path d="M325 80 L425 60 L425 220 L325 240 Z" fill="#FFFFFF" stroke="#37474F" stroke-width="3"/>
+                    <path d="M525 80 L425 60 L425 220 L525 240 Z" fill="#FFFFFF" stroke="#37474F" stroke-width="3"/>
+                    <line x1="425" y1="60" x2="425" y2="220" stroke="#37474F" stroke-width="3"/>
+                    <circle cx="375" cy="150" r="22" fill="#BE537D"/>
+                    <rect x="465" y="130" width="35" height="35" fill="#196E62"/>
+
+                    <circle cx="560" cy="95" r="28" fill="#BE537D"/>
+                    <rect x="532" y="130" width="56" height="100" rx="18" fill="#51367D"/>
+                    <circle cx="560" cy="235" r="28" stroke="#1A2B4C" stroke-width="4" fill="none"/>
+                </svg>
+            </div>
+
+            <!-- المثال التفاعلي لصفحات القصة -->
+            <div class="interactive-section">
+                <div class="interactive-title">
+                    <i class="fa-solid fa-book-open"></i>
+                    مثال تفاعلي: تصفح صفحات القصة الملموسة
+                </div>
+                
+                <div class="story-book-box">
+                    <div id="storyPageText" class="story-page-content">
+                        الصفحة 1: في الصباح المشمس، استيقظ العصفور الصغير ووجد قطرات الندى الناعمة. (الملمس: قطن ناعم)
+                    </div>
+                    <div class="story-controls">
+                        <button class="story-btn" onclick="prevPage()"><i class="fa-solid fa-arrow-right"></i> الصفحة السابقة</button>
+                        <button class="story-btn" onclick="nextPage()">الصفحة التالية <i class="fa-solid fa-arrow-left"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-problem">
+                <div class="block-problem-title">المشكلة التي تحلّها</div>
+                <div class="block-problem-desc">يجعل القصة قابلة للفهم عبر أكثر من قناة حسية ويزيد فرص المشاركة.</div>
+            </div>
+
+            <div class="split-row">
+                <div class="block-materials">
+                    <div class="block-materials-title">الخامات</div>
+                    <ul class="block-materials-list">
+                        <li>أوراق سميكة</li>
+                        <li>صور</li>
+                        <li>خامات ملمسية</li>
+                        <li>أكياس شفافة صغيرة</li>
+                    </ul>
+                </div>
+
+                <div class="block-steps">
+                    <div class="block-steps-title">اصنعها في 5 خطوات</div>
+                    <ol class="block-steps-list">
+                        <li><strong>1.</strong> اختاري قصة من 4-6 صفحات.</li>
+                        <li><strong>2.</strong> اجعلي لكل صفحة فكرة واحدة.</li>
+                        <li><strong>3.</strong> أضيفي ملمسًا مرتبطًا بالمشهد.</li>
+                        <li><strong>4.</strong> استخدمي جملًا قصيرة وحظًا كبيرًا.</li>
+                        <li><strong>5.</strong> اختتمي بسؤال أو اختيار بسيط.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="block-adapt">
+                <div class="block-adapt-title">كيف نكيّفها؟</div>
+                <div class="block-adapt-desc">
+                    يُراعى الأمان والتحسس، ويمكن تسجيل النص صوتيًا وربطه بـ QR داخل النسخة الرقمية.
+                </div>
+            </div>
+
+            <div class="access-marks-row">
+                <span class="access-title">علامة الوصول الشامل:</span>
+                <div class="access-items">
+                    <span class="access-tag"><i class="fa-regular fa-circle-dot"></i> حركة</span>
+                    <span class="access-tag"><i class="fa-regular fa-circle-dot"></i> بصر</span>
+                    <span class="access-tag"><i class="fa-regular fa-circle-dot"></i> سمع</span>
+                    <span class="access-tag"><i class="fa-regular fa-circle-dot"></i> تعلم</span>
+                    <span class="access-tag"><i class="fa-regular fa-circle-dot"></i> تواصل</span>
+                </div>
+            </div>
+
+            <div class="impact-row">
+                <span class="impact-title">قياس أثر سريع:</span>
+                راقب هل زادت المشاركة؟ هل احتاج الطالب مساعدة أقل؟ هل استطاع التعبير أو إنجاز المهمة بطريقة أوضح؟
+            </div>
+
+        </div>
+
+        <footer class="toolbar">
+            <button class="tool-btn" onclick="toggleContrast()">
+                <i class="fa-solid fa-circle-half-stroke"></i> تباين عالي
+            </button>
+            <button class="tool-btn" onclick="changeFontSize(1)">
+                <i class="fa-solid fa-font"></i> تكبير الخط
+            </button>
+            <button class="tool-btn" onclick="changeFontSize(-1)">
+                <i class="fa-solid fa-font"></i> تصغير الخط
+            </button>
+            <button class="tool-btn" onclick="window.print()">
+                <i class="fa-solid fa-print"></i> طباعة البطاقة
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        const storyPages = [
+            "الصفحة 1: في الصباح المشمس، استيقظ العصفور الصغير ووجد قطرات الندى الناعمة. (الملمس: قطن ناعم)",
+            "الصفحة 2: طار العصفور فوق تل رملي مرتفع. (الملمس: ورق صنفرة خشن)",
+            "الصفحة 3: عبر النهر على جذع شجرة خشن ولحاء بارز. (الملمس: خيوط خشنة أو لحاء شجر)",
+            "الصفحة 4: وصل إلى عشه الدافئ ليلاً ونام بسعادة. (الملمس: قماش صوفي دافئ)"
+        ];
+        
+        let currentPageIndex = 0;
+
+        function nextPage() {
+            currentPageIndex = (currentPageIndex + 1) % storyPages.length;
+            document.getElementById('storyPageText').innerText = storyPages[currentPageIndex];
+        }
+
+        function prevPage() {
+            currentPageIndex = (currentPageIndex - 1 + storyPages.length) % storyPages.length;
+            document.getElementById('storyPageText').innerText = storyPages[currentPageIndex];
+        }
+
+        function toggleContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        let currentFontSize = 100;
+        function changeFontSize(direction) {
+            currentFontSize += direction * 10;
+            if (currentFontSize < 80) currentFontSize = 80;
+            if (currentFontSize > 150) currentFontSize = 150;
+            document.documentElement.style.fontSize = currentFontSize + '%';
+        }
+    </script>
+</body>
+</html>
